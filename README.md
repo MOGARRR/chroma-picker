@@ -1,36 +1,73 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Chroma Picker
 
-## Getting Started
+Chroma Picker is an interactive color analysis tool built for artists. It helps break down the colors in any image, understand the underlying color theory, and learn how to recreate those colors using only primary colors, black, and white.
 
-First, run the development server:
+## ✨ Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+### 🔍 Color Inspection
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- Hover over any image to view: HEX RGB HSL
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 🖼️ Image Upload
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- Browse through selection of copyright free images
+- Upload your own images
 
-## Learn More
+### 🎨 Palette Extraction
 
-To learn more about Next.js, take a look at the following resources:
+- Automatically generate a color palette
+- Simplify palette down to an images most dominant colors
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### 🧪 Color Mixing Guide
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- Learn how to recreate a selected color using Primary colors (red, blue, yellow) and black/white
 
-## Deploy on Vercel
+## 🛠️ Tech Stack
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+#### Frontend: Next.js, TypeScript, React
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+#### Backend: Next.js, TypeScript
+
+#### Styling: CSS / Tailwind
+
+## 🗺️ Roadmap
+
+### Current focus
+
+#### Phase 1 — Foundations
+
+- Set up project structure
+- Implement image upload
+- Render image to canvas
+
+#### Phase 2 — Color Picking
+
+- Track mouse position on canvas
+- Read pixel data
+- Display RGB / HEX / HSL
+
+#### Phase 3 — Palette System
+
+- Extract dominant colors
+- Display palette visually
+- Allow selecting a palette color
+
+#### Phase 4 — Mixing Logic
+
+- Create color approximation system
+- Map colors to primary mix ratios
+- Display mixing instructions
+
+### Phase 5 — Polish
+
+- UI improvements
+- Performance optimization
+- Error handling
+
+### Stretch Ideas
+
+- Value (grayscale-) analysis mode
+- Color mixing ratio practice 
+- Save and load palettes
+- Export palettes (PNG / JSON)
+- Screen-wide color picker
