@@ -1,6 +1,7 @@
 "use client";
 import Image from "next/image";
 import ColorSwatch from "./components/ColorSwatch";
+import Palette from "./components/Palette";
 
 export default function Home() {
   return (
@@ -21,15 +22,7 @@ export default function Home() {
           </div>
 
           {/* Palette */}
-          <div className="bg-gray-700 p-4 rounded">
-            <h2 className="text-center text-xl mb-2">Palette</h2>
-            <div className="flex justify-evenly">
-              <div className="border bg-red-400 p-4 rounded">color</div>
-              <div className="border bg-red-400 p-4 rounded">color</div>
-              <div className="border bg-red-400 p-4 rounded">color</div>
-              <div className="border bg-red-400 p-4 rounded">color</div>
-            </div>
-          </div>
+          <Palette/>
         </div>
 
         {/* Hover and Selected */}
