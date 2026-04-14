@@ -1,5 +1,6 @@
 "use client";
 import Image from "next/image";
+import ColorSwatch from "./components/ColorSwatch";
 
 export default function Home() {
   return (
@@ -35,76 +36,10 @@ export default function Home() {
 
         <div className="flex-1 flex flex-col gap-5">
           {/* Hover Color */}
-          <div
-            className={`bg-orange-400 flex flex-col p-4 rounded items-center`}
-          >
-            <div className="bg-blue-700 p-4 rounded-full w-24 h-24 flex items-center justify-center text-white">
-              Hover
-            </div>
-
-            <div className="w-full">
-              <h2 className="text-center text-xl mb-2">Color Info</h2>
-              <div className="flex flex-col gap-2">
-                <div className="flex justify-between bg-gray-600 p-2 rounded items-center">
-                  <span>RGB</span>
-                  <span>#Val</span>
-                  <button className="p-1 border rounded cursor-pointer">
-                    Copy
-                  </button>
-                </div>
-                <div className="flex justify-between bg-gray-600 p-2 rounded items-center">
-                  <span>Hex</span>
-                  <span>#Val</span>
-                  <button className="p-1 border rounded cursor-pointer">
-                    Copy
-                  </button>
-                </div>
-                <div className="flex justify-between bg-gray-600 p-2 rounded items-center">
-                  <span>HSL</span>
-                  <span>#Val</span>
-                  <button className="p-1 border rounded cursor-pointer">
-                    Copy
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
+          <ColorSwatch title="Hover" rgbValue="something" hexValue="something" hslValue="something"/>
 
           {/* Selected Color */}
-          <div
-            className={`bg-green-500 flex flex-col p-4 rounded items-center gap-4`}
-          >
-            <div className="bg-blue-700 p-4 rounded-full w-24 h-24 flex items-center justify-center text-white">
-              Selected
-            </div>
-
-            <div className="w-full">
-              <h2 className="text-center text-xl mb-2">Color Info</h2>
-              <div className="flex flex-col gap-2">
-                <div className="flex justify-between bg-gray-600 p-2 rounded items-center">
-                  <span>RGB</span>
-                  <span>#Val</span>
-                  <button className="p-1 border rounded cursor-pointer">
-                    Copy
-                  </button>
-                </div>
-                <div className="flex justify-between bg-gray-600 p-2 rounded items-center">
-                  <span>Hex</span>
-                  <span>#Val</span>
-                  <button className="p-1 border rounded cursor-pointer">
-                    Copy
-                  </button>
-                </div>
-                <div className="flex justify-between bg-gray-600 p-2 rounded items-center">
-                  <span>HSL</span>
-                  <span>#Val</span>
-                  <button className="p-1 border rounded cursor-pointer">
-                    Copy
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
+          <ColorSwatch title="Selected" rgbValue="something" hexValue="something" hslValue="something"/>
         </div>
       </div>
     </div>
