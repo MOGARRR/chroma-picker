@@ -17,6 +17,7 @@ export default function Home() {
               src="/cet-image.png"
               width={500}
               height={500}
+              loading="eager"
               alt="Canvas"
             />
           </div>
