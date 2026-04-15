@@ -20,7 +20,10 @@ export default function Home() {
               loading="eager"
               alt="Canvas"
             />
+
+            
           </div>
+          
 
           {/* Palette */}
           <Palette/>
