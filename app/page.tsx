@@ -24,6 +24,22 @@ export default function Home() {
     };
   }, []);
 
+  const handleMouse = (e: React.MouseEvent<HTMLCanvasElement>) => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const rect = canvas.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    const pixel = ctx.getImageData(x, y, 1, 1);
+    const data = pixel.data;
+    const rgbColor = `rgb(${data[0]}, ${data[1]}, ${data[2]})`;
+    
+    return rgbColor;
+  };
 
   return (
     <div className="bg-stone-300 w-screen h-screen flex justify-center items-center">
@@ -33,7 +49,7 @@ export default function Home() {
         <div className="flex-1 flex flex-col gap-4">
           {/* Canvas / Image */}
           <div className="flex-1 bg-black flex items-center justify-center">
-            <canvas ref={canvasRef} className="w-full h-full"></canvas>
+            <canvas ref={canvasRef} onClick={handleMouse}className="w-full h-full"></canvas>
           </div>
 
           {/* Palette */}
