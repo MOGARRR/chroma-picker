@@ -2,8 +2,29 @@
 import Image from "next/image";
 import ColorSwatch from "./components/ColorSwatch";
 import Palette from "./components/Palette";
+import React, { useRef, useEffect, useState } from "react";
 
 export default function Home() {
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    const img = new window.Image();
+    img.crossOrigin = "anonymous";
+    img.src = `/cet-image.png`;
+
+    img.onload = () => {
+      canvas.width = img.width;
+      canvas.height = img.height;
+      ctx.drawImage(img, 0, 0);
+    };
+  }, []);
+
+
   return (
     <div className="bg-stone-300 w-screen h-screen flex justify-center items-center">
       <div className="bg-gray-500 w-4/5 h-4/5 flex p-4 gap-4">
@@ -12,31 +33,31 @@ export default function Home() {
         <div className="flex-1 flex flex-col gap-4">
           {/* Canvas / Image */}
           <div className="flex-1 bg-black flex items-center justify-center">
-            <Image
-              className="object-cover w-full h-full"
-              src="/cet-image.png"
-              width={500}
-              height={500}
-              loading="eager"
-              alt="Canvas"
-            />
-
-            
+            <canvas ref={canvasRef} className="w-full h-full"></canvas>
           </div>
-          
 
           {/* Palette */}
-          <Palette/>
+          <Palette />
         </div>
 
         {/* Hover and Selected */}
 
         <div className="flex-1 flex flex-col gap-5">
           {/* Hover Color */}
-          <ColorSwatch title="Hover" rgbValue="something" hexValue="something" hslValue="something"/>
+          <ColorSwatch
+            title="Hover"
+            rgbValue="something"
+            hexValue="something"
+            hslValue="something"
+          />
 
           {/* Selected Color */}
-          <ColorSwatch title="Selected" rgbValue="something" hexValue="something" hslValue="something"/>
+          <ColorSwatch
+            title="Selected"
+            rgbValue="something"
+            hexValue="something"
+            hslValue="something"
+          />
         </div>
       </div>
     </div>
