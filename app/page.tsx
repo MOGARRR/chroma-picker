@@ -1,10 +1,15 @@
 "use client";
-import Image from "next/image";
 import ColorSwatch from "./components/ColorSwatch";
 import Palette from "./components/Palette";
 import React, { useRef, useEffect, useState } from "react";
+import rgbToHex from "@/src/helpers/rgbToHex";
+import rgbToHsl from "@/src/helpers/rgbToHsl";
+
 
 export default function Home() {
+
+
+  
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -37,7 +42,8 @@ export default function Home() {
     const pixel = ctx.getImageData(x, y, 1, 1);
     const data = pixel.data;
     const rgbColor = `rgb(${data[0]}, ${data[1]}, ${data[2]})`;
-    
+    const hexColor = rgbToHex(data[0], data[1], data[2]);
+    const hslColor = rgbToHsl(data[0],data[1],data[2])    
     return rgbColor;
   };
 

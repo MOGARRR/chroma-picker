@@ -55,3 +55,4 @@ const rgbToHex = (r: any, g: any, b: any) => {
 };
 
 
+export default rgbToHex

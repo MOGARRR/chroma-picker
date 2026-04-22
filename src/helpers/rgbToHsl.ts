@@ -118,7 +118,6 @@ const rgbToHsl = (r: any, g: any, b: any) => {
   // 2. Get L, if min === max the color is gray so return zero hue and saturation
 
   let l = roundNum((cMin + cMax) / 2)
-  console.log(l);
 
   if (cMax === cMin){
     return `0°, 0.0, ${l * 100}%`
@@ -151,3 +150,5 @@ const rgbToHsl = (r: any, g: any, b: any) => {
 
   return `${h}°, ${s}%, ${l}%`
 }
+
+export default rgbToHsl
