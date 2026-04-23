@@ -7,9 +7,12 @@ import rgbToHsl from "@/src/helpers/rgbToHsl";
 
 
 export default function Home() {
-
-
   
+  const [rgbColor, setRgbColor] = useState('')
+  const [hexColor, setHexColor] = useState('')
+  const [hslColor, setHslColor] = useState('')
+
+
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -41,10 +44,12 @@ export default function Home() {
 
     const pixel = ctx.getImageData(x, y, 1, 1);
     const data = pixel.data;
-    const rgbColor = `rgb(${data[0]}, ${data[1]}, ${data[2]})`;
+    const rgbColor = `${data[0]}, ${data[1]}, ${data[2]}`;
     const hexColor = rgbToHex(data[0], data[1], data[2]);
-    const hslColor = rgbToHsl(data[0],data[1],data[2])    
-    return rgbColor;
+    const hslColor = rgbToHsl(data[0],data[1],data[2])  
+    setRgbColor(rgbColor)
+    setHexColor(hexColor)
+    setHslColor(hslColor)
   };
 
   return (
@@ -54,8 +59,8 @@ export default function Home() {
 
         <div className="flex-1 flex flex-col gap-4">
           {/* Canvas / Image */}
-          <div className="flex-1 bg-black flex items-center justify-center">
-            <canvas ref={canvasRef} onClick={handleMouse}className="w-full h-full"></canvas>
+          <div className="flex-1 bg-black flex items-center justify-center cursor-crosshair">
+            <canvas ref={canvasRef} onMouseMove={handleMouse}className="w-full h-full"></canvas>
           </div>
 
           {/* Palette */}
@@ -68,9 +73,9 @@ export default function Home() {
           {/* Hover Color */}
           <ColorSwatch
             title="Hover"
-            rgbValue="something"
-            hexValue="something"
-            hslValue="something"
+            rgbValue={rgbColor}
+            hexValue={hexColor}
+            hslValue={hslColor}
           />
 
           {/* Selected Color */}
