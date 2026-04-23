@@ -5,13 +5,13 @@ import React, { useRef, useEffect, useState } from "react";
 import rgbToHex from "@/src/helpers/rgbToHex";
 import rgbToHsl from "@/src/helpers/rgbToHsl";
 
-
 export default function Home() {
-  
-  const [rgbColor, setRgbColor] = useState('')
-  const [hexColor, setHexColor] = useState('')
-  const [hslColor, setHslColor] = useState('')
-
+  const [rgbHover, setRgbHover] = useState("");
+  const [hexHover, setHexHover] = useState("");
+  const [hslHover, setHslHover] = useState("");
+  const [rgbSelected, setRgbSelected] = useState("");
+  const [hexSelected, setHexSelected] = useState("");
+  const [hslSelected, setHslSelected] = useState("");
 
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   useEffect(() => {
@@ -46,10 +46,17 @@ export default function Home() {
     const data = pixel.data;
     const rgbColor = `${data[0]}, ${data[1]}, ${data[2]}`;
     const hexColor = rgbToHex(data[0], data[1], data[2]);
-    const hslColor = rgbToHsl(data[0],data[1],data[2])  
-    setRgbColor(rgbColor)
-    setHexColor(hexColor)
-    setHslColor(hslColor)
+    const hslColor = rgbToHsl(data[0], data[1], data[2]);
+
+    if (e.type === "click") {
+      setRgbSelected(rgbColor);
+      setHexSelected(hexColor);
+      setHslSelected(hslColor);
+    }
+
+    setRgbHover(rgbColor);
+    setHexHover(hexColor);
+    setHslHover(hslColor);
   };
 
   return (
@@ -60,7 +67,12 @@ export default function Home() {
         <div className="flex-1 flex flex-col gap-4">
           {/* Canvas / Image */}
           <div className="flex-1 bg-black flex items-center justify-center cursor-crosshair">
-            <canvas ref={canvasRef} onMouseMove={handleMouse}className="w-full h-full"></canvas>
+            <canvas
+              ref={canvasRef}
+              onMouseMove={handleMouse}
+              onClick={handleMouse}
+              className="w-full h-full"
+            ></canvas>
           </div>
 
           {/* Palette */}
@@ -73,17 +85,17 @@ export default function Home() {
           {/* Hover Color */}
           <ColorSwatch
             title="Hover"
-            rgbValue={rgbColor}
-            hexValue={hexColor}
-            hslValue={hslColor}
+            rgbValue={rgbHover}
+            hexValue={hexHover}
+            hslValue={hslHover}
           />
 
           {/* Selected Color */}
           <ColorSwatch
             title="Selected"
-            rgbValue="something"
-            hexValue="something"
-            hslValue="something"
+            rgbValue={rgbSelected}
+            hexValue={hexSelected}
+            hslValue={hslSelected}
           />
         </div>
       </div>

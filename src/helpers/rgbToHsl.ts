@@ -145,8 +145,8 @@ const rgbToHsl = (r: any, g: any, b: any) => {
   if (h < 0) h += 360
 
   h = Math.round(h)
-  s = Math.abs(s * 100)
-  l = Math.abs(l * 100)
+  s = roundNum(Math.abs(s * 100))
+  l = roundNum(Math.abs(l * 100))
 
   return `${h}°, ${s}%, ${l}%`
 }
