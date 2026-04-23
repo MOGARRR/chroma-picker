@@ -2,9 +2,9 @@ import React from "react";
 
 type ColorSwatchProps = {
   title: string;
-  rgbValue: string | '0, 0, 0';
-  hexValue: string | '#000000';
-  hslValue: string | '0°, 0%, 0%';
+  rgbValue: string;
+  hexValue: string;
+  hslValue: string;
 };
 
 const ColorSwatch = ({
@@ -15,7 +15,10 @@ const ColorSwatch = ({
 }: ColorSwatchProps) => {
   return (
     <div className={`bg-orange-400 flex flex-col p-4 rounded items-center`}>
-      <div className="bg-blue-700 p-4 rounded-full w-24 h-24 flex items-center justify-center text-white">
+      <div
+        className="bg-blue-700 border-2 p-4 rounded-full w-24 h-24 flex items-center justify-center text-white"
+        style={{ backgroundColor: rgbValue }}
+      >
         {title}
       </div>
 
@@ -24,12 +27,12 @@ const ColorSwatch = ({
         <div className="flex flex-col gap-2">
           <div className="flex justify-between bg-gray-600 p-2 rounded items-center">
             <span>RGB</span>
-            <span>{`rgb(${rgbValue})`}</span>
+            <span>{`${rgbValue}`}</span>
             <button className="p-1 border rounded cursor-pointer">Copy</button>
           </div>
           <div className="flex justify-between bg-gray-600 p-2 rounded items-center">
             <span>HEX</span>
-            <span>{`${hexValue}`}</span>
+            <span>{`(${hexValue})`}</span>
             <button className="p-1 border rounded cursor-pointer">Copy</button>
           </div>
           <div className="flex justify-between bg-gray-600 p-2 rounded items-center">

@@ -36,15 +36,18 @@ export default function Home() {
     const canvas = canvasRef.current;
     if (!canvas) return;
     const rect = canvas.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
+    const scaleX = canvas.width / rect.width;
+    const scaleY = canvas.height / rect.height;
+
+    const x = (e.clientX - rect.left) * scaleX;
+    const y = (e.clientY - rect.top) * scaleY;
 
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
     const pixel = ctx.getImageData(x, y, 1, 1);
     const data = pixel.data;
-    const rgbColor = `${data[0]}, ${data[1]}, ${data[2]}`;
+    const rgbColor = `rgb(${data[0]} ${data[1]} ${data[2]} / ${data[3] / 255})`;
     const hexColor = rgbToHex(data[0], data[1], data[2]);
     const hslColor = rgbToHsl(data[0], data[1], data[2]);
 
@@ -66,7 +69,7 @@ export default function Home() {
 
         <div className="flex-1 flex flex-col gap-4">
           {/* Canvas / Image */}
-          <div className="flex-1 bg-black flex items-center justify-center cursor-crosshair">
+          <div className="flex-1 bg-black flex items-center justify-center cursor-crosshvair">
             <canvas
               ref={canvasRef}
               onMouseMove={handleMouse}
