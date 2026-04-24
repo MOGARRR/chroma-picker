@@ -13,6 +13,13 @@ const ColorSwatch = ({
   hexValue,
   hslValue,
 }: ColorSwatchProps) => {
+  const copyColor = (type: string) => {
+    type === "rgb"
+      ? navigator.clipboard.writeText(rgbValue)
+      : type === "hex"
+        ? navigator.clipboard.writeText(hexValue)
+        : navigator.clipboard.writeText(hslValue);
+  };
   return (
     <div className={`bg-orange-400 flex flex-col p-4 rounded items-center`}>
       <div
@@ -28,17 +35,32 @@ const ColorSwatch = ({
           <div className="flex justify-between bg-gray-600 p-2 rounded items-center">
             <span>RGB</span>
             <span>{`${rgbValue}`}</span>
-            <button className="p-1 border rounded cursor-pointer">Copy</button>
+            <button
+              className="p-1 border rounded cursor-pointer"
+              onClick={() => copyColor("rgb")}
+            >
+              Copy
+            </button>
           </div>
           <div className="flex justify-between bg-gray-600 p-2 rounded items-center">
             <span>HEX</span>
             <span>{`(${hexValue})`}</span>
-            <button className="p-1 border rounded cursor-pointer">Copy</button>
+            <button
+              className="p-1 border rounded cursor-pointer"
+              onClick={() => copyColor("hex")}
+            >
+              Copy
+            </button>
           </div>
           <div className="flex justify-between bg-gray-600 p-2 rounded items-center">
             <span>HSL</span>
             <span>{`(${hslValue})`}</span>
-            <button className="p-1 border rounded cursor-pointer">Copy</button>
+            <button
+              className="p-1 border rounded cursor-pointer"
+              onClick={() => copyColor("hsl")}
+            >
+              Copy
+            </button>
           </div>
         </div>
       </div>

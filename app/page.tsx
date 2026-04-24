@@ -6,12 +6,12 @@ import rgbToHex from "@/src/helpers/rgbToHex";
 import rgbToHsl from "@/src/helpers/rgbToHsl";
 
 export default function Home() {
-  const [rgbHover, setRgbHover] = useState("");
-  const [hexHover, setHexHover] = useState("");
-  const [hslHover, setHslHover] = useState("");
-  const [rgbSelected, setRgbSelected] = useState("");
-  const [hexSelected, setHexSelected] = useState("");
-  const [hslSelected, setHslSelected] = useState("");
+  const [rgbHover, setRgbHover] = useState("rgb(0,0,0)");
+  const [hexHover, setHexHover] = useState("#000000");
+  const [hslHover, setHslHover] = useState("0°, 0%, 0%");
+  const [rgbSelected, setRgbSelected] = useState("rgb(0,0,0)");
+  const [hexSelected, setHexSelected] = useState("#000000");
+  const [hslSelected, setHslSelected] = useState("0°, 0%, 0%");
 
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   useEffect(() => {
@@ -38,7 +38,6 @@ export default function Home() {
     const rect = canvas.getBoundingClientRect();
     const scaleX = canvas.width / rect.width;
     const scaleY = canvas.height / rect.height;
-
     const x = (e.clientX - rect.left) * scaleX;
     const y = (e.clientY - rect.top) * scaleY;
 
@@ -47,7 +46,7 @@ export default function Home() {
 
     const pixel = ctx.getImageData(x, y, 1, 1);
     const data = pixel.data;
-    const rgbColor = `rgb(${data[0]} ${data[1]} ${data[2]} / ${data[3] / 255})`;
+    const rgbColor = `rgb(${data[0]}, ${data[1]}, ${data[2]})`;
     const hexColor = rgbToHex(data[0], data[1], data[2]);
     const hslColor = rgbToHsl(data[0], data[1], data[2]);
 
@@ -69,7 +68,7 @@ export default function Home() {
 
         <div className="flex-1 flex flex-col gap-4">
           {/* Canvas / Image */}
-          <div className="flex-1 bg-black flex items-center justify-center cursor-crosshvair">
+          <div className="flex-1 bg-black flex items-center justify-center cursor-crosshair">
             <canvas
               ref={canvasRef}
               onMouseMove={handleMouse}
