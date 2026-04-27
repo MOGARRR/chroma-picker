@@ -15,6 +15,7 @@ export default function Home() {
   const [uploadImage, setUploadImage] = useState("/cet-image.png");
 
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
+
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -30,6 +31,9 @@ export default function Home() {
       canvas.width = img.width;
       canvas.height = img.height;
       ctx.drawImage(img, 0, 0);
+
+      const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+      console.log(formatRgb(imageData.data));
     };
   }, [uploadImage]);
 
@@ -47,6 +51,7 @@ export default function Home() {
 
     const pixel = ctx.getImageData(x, y, 1, 1);
     const data = pixel.data;
+
     const rgbColor = `rgb(${data[0]}, ${data[1]}, ${data[2]})`;
     const hexColor = rgbToHex(data[0], data[1], data[2]);
     const hslColor = rgbToHsl(data[0], data[1], data[2]);
@@ -57,7 +62,7 @@ export default function Home() {
       setHslSelected(hslColor);
     }
 
-    setRgbHover(rgbColor); 
+    setRgbHover(rgbColor);
     setHexHover(hexColor);
     setHslHover(hslColor);
   };
@@ -68,8 +73,25 @@ export default function Home() {
     if (file) {
       setUploadImage(URL.createObjectURL(file));
     }
-    console.log(uploadImage);
   };
+
+  const formatRgb = (imageData: any) => {
+
+    const rgbValues = [];
+    
+    // Condense pixel data into rgb values by creating an rgb object on every 4th/255 element
+    for (let i = 0; i < imageData.length; i += 4) {
+      const rgb = {
+        r: imageData[i],
+        g: imageData[i++],
+        b: imageData[i + 2],
+      };
+      rgbValues.push(rgb);
+    }
+    return rgbValues;
+  };
+
+
 
   return (
     <div className="bg-stone-300 w-screen h-screen flex justify-center items-center">
@@ -78,12 +100,12 @@ export default function Home() {
 
         <div className="flex-1 flex flex-col gap-4">
           {/* Canvas / Image */}
-          <div className="flex-1 bg-black flex items-center justify-center cursor-crosshair">
+          <div className="flex-1 bg-black flex items-center justify-center cursor-crosshair h-full overflow-hidden">
             <canvas
               ref={canvasRef}
               onMouseMove={handleMouse}
               onClick={handleMouse}
-              className="w-full h-full"
+              className="w-full h-full object-fill"
             ></canvas>
           </div>
 
