@@ -12,6 +12,7 @@ export default function Home() {
   const [rgbSelected, setRgbSelected] = useState("rgb(0,0,0)");
   const [hexSelected, setHexSelected] = useState("#000000");
   const [hslSelected, setHslSelected] = useState("0°, 0%, 0%");
+  const [uploadImage, setUploadImage] = useState("/cet-image.png");
 
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   useEffect(() => {
@@ -23,14 +24,14 @@ export default function Home() {
 
     const img = new window.Image();
     img.crossOrigin = "anonymous";
-    img.src = `/cet-image.png`;
+    img.src = uploadImage;
 
     img.onload = () => {
       canvas.width = img.width;
       canvas.height = img.height;
       ctx.drawImage(img, 0, 0);
     };
-  }, []);
+  }, [uploadImage]);
 
   const handleMouse = (e: React.MouseEvent<HTMLCanvasElement>) => {
     const canvas = canvasRef.current;
@@ -56,9 +57,18 @@ export default function Home() {
       setHslSelected(hslColor);
     }
 
-    setRgbHover(rgbColor);
+    setRgbHover(rgbColor); 
     setHexHover(hexColor);
     setHslHover(hslColor);
+  };
+
+  const handleImageUpload = (e: any) => {
+    const file = e.target.files[0];
+    console.log(file);
+    if (file) {
+      setUploadImage(URL.createObjectURL(file));
+    }
+    console.log(uploadImage);
   };
 
   return (
@@ -79,6 +89,15 @@ export default function Home() {
 
           {/* Palette */}
           <Palette />
+          <label className=" flex justify-around p-2 bg-gray-600 w-full rounded-lg border-2">
+            Upload your own image:
+            <input
+              type="file"
+              id="uploadImage"
+              accept="image/png, image/jpeg"
+              onChange={(e) => handleImageUpload(e)}
+            />
+          </label>
         </div>
 
         {/* Hover and Selected */}
