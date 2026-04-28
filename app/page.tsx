@@ -4,6 +4,8 @@ import Palette from "./components/Palette";
 import React, { useRef, useEffect, useState } from "react";
 import rgbToHex from "@/src/helpers/rgbToHex";
 import rgbToHsl from "@/src/helpers/rgbToHsl";
+import formatRgb from "@/src/helpers/formatRgb";
+
 
 type RGB = { r: number; g: number; b: number };
 
@@ -17,7 +19,7 @@ export default function Home() {
   const [uploadImage, setUploadImage] = useState("/cet-image.png");
 
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
-
+ 
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -77,23 +79,6 @@ export default function Home() {
     if (file) {
       setUploadImage(URL.createObjectURL(file));
     }
-  };
-
-  const formatRgb = (imageData: any) => {
-    // UPDATE TYPE
-
-    const rgbValues = [];
-
-    // Condense pixel data into rgb values by creating an rgb object on every 4th/255 element
-    for (let i = 0; i < imageData.length; i += 4) {
-      const rgb = {
-        r: imageData[i],
-        g: imageData[i++],
-        b: imageData[i + 2],
-      };
-      rgbValues.push(rgb);
-    }
-    return rgbValues;
   };
 
   const getLargestColorRange = (rgbValues: any) => {
