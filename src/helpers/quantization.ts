@@ -1,5 +1,5 @@
 import getLargestColorRange from "./getLargestColorRange";
-type RGB = { r: number; g: number; b: number };
+import RGB from "../types/RGB";
 
 const quantization = (rgbValues: RGB[], paletteAmount: number): RGB[] => {
   // Base Case

@@ -7,8 +7,6 @@ import rgbToHsl from "@/src/helpers/rgbToHsl";
 import formatRgb from "@/src/helpers/formatRgb";
 import quantization from "@/src/helpers/quantization";
 
-type RGB = { r: number; g: number; b: number };
-
 export default function Home() {
   const [rgbHover, setRgbHover] = useState("rgb(0,0,0)");
   const [hexHover, setHexHover] = useState("#000000");
@@ -75,7 +73,6 @@ export default function Home() {
   const handleImageUpload = (e: any) => {
     // UPDATE TYPE
     const file = e.target.files[0];
-    console.log(file);
     if (file) {
       setUploadImage(URL.createObjectURL(file));
     }
