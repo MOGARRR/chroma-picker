@@ -2,11 +2,11 @@
 import React, { useState } from "react";
 
 const mockData = [
-  { id: 1, color: "bg-blue-400" },
-  { id: 2, color: "bg-red-400" },
-  { id: 3, color: "bg-pink-400" },
-  { id: 4, color: "bg-orange-400" },
-  { id: 5, color: "bg-green-400" },
+  { id: 1, color: "rgb(2, 133, 255)" },
+  { id: 2, color: "rgb(255, 2, 2)" },
+  { id: 3, color: "rgb(255, 2, 234)" },
+  { id: 4, color: "rgb(255, 145, 2)" },
+  { id: 5, color: "rgb(255, 238, 2)" },
 ];
 
 const Palette = () => {
@@ -32,8 +32,9 @@ const Palette = () => {
           ➖
         </button>
         {visibleColors.map((item) => (
-          <div key={item.id} className={`${item.color} flex-2`} />
+          <div key={item.id} className={`flex-2`} style={{ backgroundColor: `${item.color}` }} />
         ))}
+
         <button
           className="bg-gray-400 w-1/8 rounded-r-lg cursor-pointer"
           onClick={addColors}
