@@ -7,7 +7,7 @@ const formatRgb = (imageData: any) => {
   for (let i = 0; i < imageData.length; i += 4) {
     const rgb = {
       r: imageData[i],
-      g: imageData[i++],
+      g: imageData[i + 1],
       b: imageData[i + 2],
     };
     rgbValues.push(rgb);

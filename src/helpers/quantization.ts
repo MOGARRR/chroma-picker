@@ -1,14 +1,17 @@
 import getLargestColorRange from "./getLargestColorRange";
 import RGB from "../types/RGB";
 
-const quantization = (rgbValues: RGB[], paletteAmount: number): RGB[] => {
+const quantization = (rgbValues: RGB[], depth = 0): RGB[] => {
   // Base Case
 
   // Depth is 2^4 for 16 colors
   const MAX_DEPTH = 4;
 
   // When max depth is hit, return a color that is the average of the group
-  if (paletteAmount === MAX_DEPTH || rgbValues.length === 0) {
+  if (rgbValues.length === 0) {
+  return [];
+}
+  if (depth === MAX_DEPTH) {
     const color = rgbValues.reduce(
       (prev: any, curr: any) => {
         prev.r += curr.r;
@@ -31,7 +34,6 @@ const quantization = (rgbValues: RGB[], paletteAmount: number): RGB[] => {
   }
 
   // Recursion
-
   const componentToSortBy = getLargestColorRange(rgbValues);
 
   // sort pixels by channel to create color groups
@@ -40,11 +42,11 @@ const quantization = (rgbValues: RGB[], paletteAmount: number): RGB[] => {
     return a[componentToSortBy] - b[componentToSortBy];
   });
 
-  const mid = rgbValues.length / 2;
+  const mid = Math.floor(rgbValues.length / 2);
 
   return [
-    ...quantization(rgbValues.slice(0, mid), paletteAmount + 1),
-    ...quantization(rgbValues.slice(mid + 1), paletteAmount + 1),
+    ...quantization(rgbValues.slice(0, mid), depth + 1),
+    ...quantization(rgbValues.slice(mid), depth + 1),
   ];
 };
 

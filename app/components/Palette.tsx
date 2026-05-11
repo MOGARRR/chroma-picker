@@ -13,6 +13,7 @@ const Palette = ({rgbDataValues}: PaletteProps) => {
     for (let i = 0; i < colorArray.length; i++) {
       colorArray[i].id = i;
     }
+    console.log(colorArray);
     return colorArray;
   };
 

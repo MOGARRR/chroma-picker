@@ -4,14 +4,14 @@ const getLargestColorRange = (rgbValues: any) => {
   // Find Color Channel with largest Range
 
   // Mins values
-  let rMin = Number.MAX_VALUE;
-  let gMin = Number.MAX_VALUE;
-  let bMin = Number.MAX_VALUE;
+let rMin = Infinity;
+let gMin = Infinity;
+let bMin = Infinity;
 
   // Max values
-  let rMax = Number.MIN_VALUE;
-  let gMax = Number.MIN_VALUE;
-  let bMax = Number.MIN_VALUE;
+  let rMax = -Infinity;
+  let gMax = -Infinity;
+  let bMax = -Infinity;
 
   // Loop through each pixel to compare and get each colors Min and Max values
 

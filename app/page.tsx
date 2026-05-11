@@ -6,6 +6,7 @@ import rgbToHex from "@/src/helpers/rgbToHex";
 import rgbToHsl from "@/src/helpers/rgbToHsl";
 import formatRgb from "@/src/helpers/formatRgb";
 import quantization from "@/src/helpers/quantization";
+import RGB from "@/src/types/RGB";
 
 export default function Home() {
   const [rgbHover, setRgbHover] = useState("rgb(0,0,0)");
@@ -15,6 +16,7 @@ export default function Home() {
   const [hexSelected, setHexSelected] = useState("#000000");
   const [hslSelected, setHslSelected] = useState("0°, 0%, 0%");
   const [uploadImage, setUploadImage] = useState("/cet-image.png");
+  const [rgbData, setRgbData] = useState<RGB[]>([])
 
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
@@ -36,9 +38,10 @@ export default function Home() {
 
       const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
       const rgbValues = formatRgb(imageData.data);
-      console.log(quantization(rgbValues, 1));
+      setRgbData(quantization(rgbValues))
     };
   }, [uploadImage]);
+
 
   const handleMouse = (e: React.MouseEvent<HTMLCanvasElement>) => {
     const canvas = canvasRef.current;
@@ -95,7 +98,7 @@ export default function Home() {
           </div>
 
           {/* Palette */}
-          <Palette />
+          <Palette rgbDataValues={rgbData}/>
           <label className=" flex justify-around p-2 bg-gray-600 w-full rounded-lg border-2">
             Upload your own image:
             <input
