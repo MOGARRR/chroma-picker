@@ -2,16 +2,25 @@
 import React, { useState } from "react";
 
 const mockData = [
-  { id: 1, color: "rgb(2, 133, 255)" },
-  { id: 2, color: "rgb(255, 2, 2)" },
-  { id: 3, color: "rgb(255, 2, 234)" },
-  { id: 4, color: "rgb(255, 145, 2)" },
-  { id: 5, color: "rgb(255, 238, 2)" },
+  { r: 2, g: 133, b: 255 },
+  { r: 255, g: 2, b: 2 },
+  { r: 255, g: 2, b: 234 },
+  { r: 255, g: 145, b: 2 },
+  { r: 255, g: 238, b: 2 },
 ];
 
 const Palette = () => {
   const [paletteAmount, setPaletteAmount] = useState(0);
-  const visibleColors = mockData.slice(0, mockData.length - paletteAmount);
+
+  const addId = (colorArray: any) => {
+    for (let i = 0; i < colorArray.length; i++) {
+      colorArray[i].id = i;
+    }
+    return colorArray;
+  };
+
+  const parsedData = addId(mockData);
+  const visibleColors = parsedData.slice(0, mockData.length - paletteAmount);
 
   const removeColors = () => {
     setPaletteAmount((prev) => (prev < mockData.length - 1 ? prev + 1 : prev));
@@ -31,10 +40,13 @@ const Palette = () => {
         >
           ➖
         </button>
-        {visibleColors.map((item) => (
-          <div key={item.id} className={`flex-2`} style={{ backgroundColor: `${item.color}` }} />
+        {visibleColors.map((item: any) => (
+          <div
+            key={item.id}
+            className={`flex-2`}
+            style={{ backgroundColor: `rgb(${item.r}, ${item.g},${item.b})` }}
+          />
         ))}
-
         <button
           className="bg-gray-400 w-1/8 rounded-r-lg cursor-pointer"
           onClick={addColors}
