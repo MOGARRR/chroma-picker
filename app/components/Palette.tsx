@@ -1,15 +1,12 @@
 "use client";
 import React, { useState } from "react";
+import RGB from "@/src/types/RGB";
 
-const mockData = [
-  { r: 2, g: 133, b: 255 },
-  { r: 255, g: 2, b: 2 },
-  { r: 255, g: 2, b: 234 },
-  { r: 255, g: 145, b: 2 },
-  { r: 255, g: 238, b: 2 },
-];
+interface PaletteProps {
+  rgbDataValues: RGB[]
+}
 
-const Palette = () => {
+const Palette = ({rgbDataValues}: PaletteProps) => {
   const [paletteAmount, setPaletteAmount] = useState(0);
 
   const addId = (colorArray: any) => {
@@ -19,11 +16,11 @@ const Palette = () => {
     return colorArray;
   };
 
-  const parsedData = addId(mockData);
-  const visibleColors = parsedData.slice(0, mockData.length - paletteAmount);
+  const parsedData = addId(rgbDataValues);
+  const visibleColors = parsedData.slice(0, parsedData.length - paletteAmount);
 
   const removeColors = () => {
-    setPaletteAmount((prev) => (prev < mockData.length - 1 ? prev + 1 : prev));
+    setPaletteAmount((prev) => (prev < parsedData.length - 1 ? prev + 1 : prev));
   };
 
   const addColors = () => {
