@@ -8,19 +8,11 @@ interface PaletteProps {
 
 const Palette = ({rgbDataValues}: PaletteProps) => {
   const [paletteAmount, setPaletteAmount] = useState(0);
-
-  const addId = (colorArray: any) => {
-    for (let i = 0; i < colorArray.length; i++) {
-      colorArray[i].id = i;
-    }
-    return colorArray;
-  };
-
-  const parsedData = addId(rgbDataValues);
-  const visibleColors = parsedData.slice(0, parsedData.length - paletteAmount);
+ 
+  const visibleColors = rgbDataValues.slice(0, rgbDataValues.length - paletteAmount);
 
   const removeColors = () => {
-    setPaletteAmount((prev) => (prev < parsedData.length - 1 ? prev + 1 : prev));
+    setPaletteAmount((prev) => (prev < rgbDataValues.length - 1 ? prev + 1 : prev));
   };
 
   const addColors = () => {
@@ -37,9 +29,9 @@ const Palette = ({rgbDataValues}: PaletteProps) => {
         >
           ➖
         </button>
-        {visibleColors.map((item: any) => (
+        {visibleColors.map((item: any, index: number ) => (
           <div
-            key={item.id}
+            key={index}
             className={`flex-2`}
             style={{ backgroundColor: `rgb(${item.r}, ${item.g},${item.b})` }}
           />

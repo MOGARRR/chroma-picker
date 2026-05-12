@@ -44,7 +44,7 @@ export default function Home() {
 
       const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
       const rgbValues = formatRgb(imageData.data);
-      setRgbData(quantization(rgbValues, 1));
+      setRgbData(quantization(rgbValues));
     };
   }, [uploadImage]);
 
