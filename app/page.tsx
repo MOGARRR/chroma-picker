@@ -33,13 +33,18 @@ export default function Home() {
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
+    const MAX_SIZE = 500;
+
     const img = new window.Image();
     img.crossOrigin = "anonymous";
     img.src = uploadImage;
 
+    // resize image to max image size to reduce pixel processing
+    const scale = Math.min(MAX_SIZE / img.width, MAX_SIZE / img.height, 1);
+
     img.onload = () => {
-      canvas.width = img.width;
-      canvas.height = img.height;
+      canvas.width = img.width * scale;
+      canvas.height = img.height * scale;
       ctx.drawImage(img, 0, 0);
 
       const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
@@ -67,7 +72,7 @@ export default function Home() {
     setHslHover(hslColor);
   };
 
-    const handleSelectedColor = (e: React.MouseEvent<HTMLCanvasElement>) => {
+  const handleSelectedColor = (e: React.MouseEvent<HTMLCanvasElement>) => {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
@@ -117,11 +122,10 @@ export default function Home() {
 
       updateHoverColor(x, y);
 
-    // Unlocks to allow next frames to be scheduled
+      // Unlocks to allow next frames to be scheduled
       animationFrameRef.current = null;
     });
   };
-
 
   const handleImageUpload = (e: any) => {
     // UPDATE TYPE

@@ -1,18 +1,24 @@
 "use client";
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import RGB from "@/src/types/RGB";
 
 interface PaletteProps {
-  rgbDataValues: RGB[]
+  rgbDataValues: RGB[];
 }
 
-const Palette = ({rgbDataValues}: PaletteProps) => {
+const Palette = ({ rgbDataValues }: PaletteProps) => {
   const [paletteAmount, setPaletteAmount] = useState(0);
- 
-  const visibleColors = rgbDataValues.slice(0, rgbDataValues.length - paletteAmount);
+
+
+  // useMemo to cache and to avoid recalculating on each render
+  const visibleColors = useMemo(() => {
+    return rgbDataValues.slice(0, rgbDataValues.length - paletteAmount);
+  }, [rgbDataValues, paletteAmount]);
 
   const removeColors = () => {
-    setPaletteAmount((prev) => (prev < rgbDataValues.length - 1 ? prev + 1 : prev));
+    setPaletteAmount((prev) =>
+      prev < rgbDataValues.length - 1 ? prev + 1 : prev,
+    );
   };
 
   const addColors = () => {
@@ -29,7 +35,7 @@ const Palette = ({rgbDataValues}: PaletteProps) => {
         >
           ➖
         </button>
-        {visibleColors.map((item: any, index: number ) => (
+        {visibleColors.map((item: any, index: number) => (
           <div
             key={index}
             className={`flex-2`}
