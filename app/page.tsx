@@ -17,6 +17,7 @@ export default function Home() {
   const [hslSelected, setHslSelected] = useState("0°, 0%, 0%");
   const [uploadImage, setUploadImage] = useState("/cet-image.png");
   const [rgbData, setRgbData] = useState<RGB[]>([]);
+  const [paletteDepth, setPaletteDepth] = useState(0)
 
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
@@ -49,9 +50,10 @@ export default function Home() {
 
       const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
       const rgbValues = formatRgb(imageData.data);
-      setRgbData(quantization(rgbValues));
+      setRgbData(quantization(rgbValues, paletteDepth));
+      
     };
-  }, [uploadImage]);
+  }, [uploadImage, paletteDepth]);
 
   const updateHoverColor = (x: number, y: number) => {
     const canvas = canvasRef.current;
@@ -152,7 +154,7 @@ export default function Home() {
           </div>
 
           {/* Palette */}
-          <Palette rgbDataValues={rgbData} />
+          <Palette rgbDataValues={rgbData} setPaletteDepth={setPaletteDepth} paletteDepth={paletteDepth}/>
           <label className=" flex justify-around p-2 bg-gray-600 w-full rounded-lg border-2">
             Upload your own image:
             <input

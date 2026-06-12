@@ -1,28 +1,38 @@
 "use client";
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import RGB from "@/src/types/RGB";
 
 interface PaletteProps {
   rgbDataValues: RGB[];
+  paletteDepth: number;
+  setPaletteDepth: React.Dispatch<React.SetStateAction<number>>;
 }
 
-const Palette = ({ rgbDataValues }: PaletteProps) => {
-  const [paletteAmount, setPaletteAmount] = useState(0);
+const Palette = ({ rgbDataValues, paletteDepth, setPaletteDepth }: PaletteProps) => {
+  const [paletteAmount, setPaletteAmount] = useState(0); 
 
+  // For palette add/remove colors
+  // use a stack structure to keep prior iterations to go back and forth smoothly
+  // either manipulate depth amount or go through and remove odd/even elements based on array length
+
+  
+  
 
   // useMemo to cache and to avoid recalculating on each render
   const visibleColors = useMemo(() => {
     return rgbDataValues.slice(0, rgbDataValues.length - paletteAmount);
   }, [rgbDataValues, paletteAmount]);
 
+
+
   const removeColors = () => {
-    setPaletteAmount((prev) =>
-      prev < rgbDataValues.length - 1 ? prev + 1 : prev,
-    );
+    if (paletteDepth + 1 === 3) return;
+    setPaletteDepth(( prev) => prev + 1)  
   };
 
   const addColors = () => {
-    setPaletteAmount((prev) => (prev > 0 ? prev - 1 : prev));
+  if (paletteDepth === 0) return;
+   setPaletteDepth(( prev) => prev - 1);
   };
 
   return (
