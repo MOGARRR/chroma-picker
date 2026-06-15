@@ -17,7 +17,8 @@ export default function Home() {
   const [hslSelected, setHslSelected] = useState("0°, 0%, 0%");
   const [uploadImage, setUploadImage] = useState("/cet-image.png");
   const [rgbData, setRgbData] = useState<RGB[]>([]);
-  const [paletteDepth, setPaletteDepth] = useState(0)
+  const [paletteDepth, setPaletteDepth] = useState(0);
+  const [imageLoaded, setImageLoaded] = useState(false);
 
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
@@ -34,26 +35,37 @@ export default function Home() {
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
-    const MAX_SIZE = 500;
-
-    const img = new window.Image();
-    img.crossOrigin = "anonymous";
+    const img = new Image();
     img.src = uploadImage;
 
-    // resize image to max image size to reduce pixel processing
-    const scale = Math.min(MAX_SIZE / img.width, MAX_SIZE / img.height, 1);
-
     img.onload = () => {
+      const MAX_SIZE = 600;
+
+      const scale = Math.min(MAX_SIZE / img.width, MAX_SIZE / img.height, 1);
+
       canvas.width = img.width * scale;
       canvas.height = img.height * scale;
-      ctx.drawImage(img, 0, 0);
 
-      const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-      const rgbValues = formatRgb(imageData.data);
-      setRgbData(quantization(rgbValues, paletteDepth));
+      ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
       
+      imageLoaded ? setImageLoaded(false) : setImageLoaded(true)
     };
-  }, [uploadImage, paletteDepth]);
+  }, [uploadImage]);
+
+  
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+
+    const rgbValues = formatRgb(imageData.data);
+
+    setRgbData(quantization(rgbValues, paletteDepth));
+  },[imageLoaded, paletteDepth]);
 
   const updateHoverColor = (x: number, y: number) => {
     const canvas = canvasRef.current;
@@ -154,7 +166,11 @@ export default function Home() {
           </div>
 
           {/* Palette */}
-          <Palette rgbDataValues={rgbData} setPaletteDepth={setPaletteDepth} paletteDepth={paletteDepth}/>
+          <Palette
+            rgbDataValues={rgbData}
+            setPaletteDepth={setPaletteDepth}
+            paletteDepth={paletteDepth}
+          />
           <label className=" flex justify-around p-2 bg-gray-600 w-full rounded-lg border-2">
             Upload your own image:
             <input

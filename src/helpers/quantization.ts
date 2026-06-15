@@ -2,7 +2,6 @@ import getLargestColorRange from "./getLargestColorRange";
 import RGB from "../types/RGB";
 
 const quantization = (rgbValues: RGB[], depth : number): RGB[] => {
-  console.log(depth);
   // Base Case
 
   // Depth is 2^4 for 16 colors
