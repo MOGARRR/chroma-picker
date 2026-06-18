@@ -11,13 +11,6 @@ interface PaletteProps {
 const Palette = ({ rgbDataValues, paletteDepth, setPaletteDepth }: PaletteProps) => {
   const [paletteAmount, setPaletteAmount] = useState(0); 
 
-  // For palette add/remove colors
-  // use a stack structure to keep prior iterations to go back and forth smoothly
-  // either manipulate depth amount or go through and remove odd/even elements based on array length
-
-  
-  
-
   // useMemo to cache and to avoid recalculating on each render
   const visibleColors = useMemo(() => {
     return rgbDataValues.slice(0, rgbDataValues.length - paletteAmount);

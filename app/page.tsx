@@ -19,6 +19,7 @@ export default function Home() {
   const [rgbData, setRgbData] = useState<RGB[]>([]);
   const [paletteDepth, setPaletteDepth] = useState(0);
   const [imageLoaded, setImageLoaded] = useState(false);
+  const [greyScale, setGreyScale] = useState(false);
 
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
@@ -28,7 +29,9 @@ export default function Home() {
   // saves the last mouseMove coordinates
   const mousePositionRef = useRef({ x: 0, y: 0 });
 
+  // Create and draw canvas image using user uploaded image
   useEffect(() => {
+    setImageLoaded(false);
     const canvas = canvasRef.current;
     if (!canvas) return;
 
@@ -47,12 +50,28 @@ export default function Home() {
       canvas.height = img.height * scale;
 
       ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-      
-      imageLoaded ? setImageLoaded(false) : setImageLoaded(true)
-    };
-  }, [uploadImage]);
 
-  
+      // GreyScale Feature
+      const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+      const data = imageData.data;
+
+      // Loop through Data array and average out rgb values to get greyscale values
+      for (let i = 0; i < data.length; i += 4) {
+        const avg = (data[i] + data[i + 1] + data[i + 2]) / 3;
+
+        data[i] = avg; // red
+        data[i + 1] = avg; // green
+        data[i + 2] = avg; // blue
+      }
+
+      // putImageData modifies image with image data given
+      if (greyScale) ctx.putImageData(imageData, 0, 0);
+
+      setImageLoaded(true);
+    };
+  }, [uploadImage, greyScale]);
+
+  // Handle Palette image data
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -65,7 +84,7 @@ export default function Home() {
     const rgbValues = formatRgb(imageData.data);
 
     setRgbData(quantization(rgbValues, paletteDepth));
-  },[imageLoaded, paletteDepth]);
+  }, [imageLoaded, paletteDepth]);
 
   const updateHoverColor = (x: number, y: number) => {
     const canvas = canvasRef.current;
@@ -149,6 +168,9 @@ export default function Home() {
     }
   };
 
+  const handleGreyScale = () =>
+    greyScale ? setGreyScale(false) : setGreyScale(true);
+
   return (
     <div className="bg-stone-300 w-screen h-screen flex justify-center items-center">
       <div className="bg-gray-500 w-4/5 h-4/5 flex p-4 gap-4">
@@ -156,6 +178,7 @@ export default function Home() {
 
         <div className="flex-1 flex flex-col gap-4">
           {/* Canvas / Image */}
+
           <div className="flex-1 bg-black flex items-center justify-center cursor-crosshair h-full overflow-hidden">
             <canvas
               ref={canvasRef}
@@ -180,6 +203,12 @@ export default function Home() {
               onChange={(e) => handleImageUpload(e)}
             />
           </label>
+          <button
+            className="bg-gray-600 w-1/4 p-2 rounded-lg self-center cursor-pointer hover:bg-gray-700"
+            onClick={handleGreyScale}
+          >
+            GreyScale
+          </button>
         </div>
 
         {/* Hover and Selected */}
