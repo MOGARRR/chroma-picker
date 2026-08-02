@@ -6,9 +6,10 @@ interface PaletteProps {
   rgbDataValues: RGB[];
   paletteDepth: number;
   setPaletteDepth: React.Dispatch<React.SetStateAction<number>>;
+  handleSelectedPaletteColor: ( r:number, g:number, b:number) => void;
 }
 
-const Palette = ({ rgbDataValues, paletteDepth, setPaletteDepth }: PaletteProps) => {
+const Palette = ({ rgbDataValues, paletteDepth, setPaletteDepth, handleSelectedPaletteColor }: PaletteProps) => {
   const [paletteAmount, setPaletteAmount] = useState(0); 
 
   // useMemo to cache and to avoid recalculating on each render
@@ -41,8 +42,9 @@ const Palette = ({ rgbDataValues, paletteDepth, setPaletteDepth }: PaletteProps)
         {visibleColors.map((item: any, index: number) => (
           <div
             key={index}
-            className={`flex-2`}
-            style={{ backgroundColor: `rgb(${item.r}, ${item.g},${item.b})` }}
+            className={`flex-2 cursor-pointer`}
+            style={{ backgroundColor: `rgb(${item.r}, ${item.g},${item.b})` }}            
+            onClick={() => handleSelectedPaletteColor(item.r, item.g, item.b)}
           />
         ))}
         <button
