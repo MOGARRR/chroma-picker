@@ -42,7 +42,7 @@ const Palette = ({ rgbDataValues, paletteDepth, setPaletteDepth, handleSelectedP
         {visibleColors.map((item: any, index: number) => (
           <div
             key={index}
-            className={`flex-2 cursor-pointer`}
+            className={`flex-2 cursor-pointer hover:flex-4 hover:border-3 border-black`}
             style={{ backgroundColor: `rgb(${item.r}, ${item.g},${item.b})` }}            
             onClick={() => handleSelectedPaletteColor(item.r, item.g, item.b)}
           />
