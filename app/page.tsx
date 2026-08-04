@@ -144,6 +144,17 @@ export default function Home() {
 
   }
 
+    const handleHoverPaletteColor = ( r:number, g:number, b:number) => {
+    const rgbColor = `rgb(${r}, ${g}, ${b})`;
+    const hexColor = rgbToHex(r, g, b);
+    const hslColor = rgbToHsl(r, g, b);
+
+    setRgbHover(rgbColor);
+    setHexHover(hexColor);
+    setHslHover(hslColor);
+
+  }
+
   const handleMouseMove = (e: React.MouseEvent<HTMLCanvasElement>) => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -206,6 +217,7 @@ export default function Home() {
             setPaletteDepth={setPaletteDepth}
             paletteDepth={paletteDepth}
             handleSelectedPaletteColor={handleSelectedPaletteColor}
+            handleHoverPaletteColor={handleHoverPaletteColor}
           />
           <label className=" flex justify-around p-2 bg-gray-600 w-full rounded-lg border-2">
             Upload your own image:

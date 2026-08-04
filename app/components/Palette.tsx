@@ -7,9 +7,10 @@ interface PaletteProps {
   paletteDepth: number;
   setPaletteDepth: React.Dispatch<React.SetStateAction<number>>;
   handleSelectedPaletteColor: ( r:number, g:number, b:number) => void;
+  handleHoverPaletteColor: ( r:number, g:number, b:number) => void;
 }
 
-const Palette = ({ rgbDataValues, paletteDepth, setPaletteDepth, handleSelectedPaletteColor }: PaletteProps) => {
+const Palette = ({ rgbDataValues, paletteDepth, setPaletteDepth, handleSelectedPaletteColor, handleHoverPaletteColor }: PaletteProps) => {
   const [paletteAmount, setPaletteAmount] = useState(0); 
 
   // useMemo to cache and to avoid recalculating on each render
@@ -45,6 +46,7 @@ const Palette = ({ rgbDataValues, paletteDepth, setPaletteDepth, handleSelectedP
             className={`flex-2 cursor-pointer hover:flex-4 hover:border-3 border-black`}
             style={{ backgroundColor: `rgb(${item.r}, ${item.g},${item.b})` }}            
             onClick={() => handleSelectedPaletteColor(item.r, item.g, item.b)}
+            onMouseEnter={() => handleHoverPaletteColor(item.r, item.g, item.b)}
           />
         ))}
         <button
